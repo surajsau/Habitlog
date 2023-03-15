@@ -1,0 +1,46 @@
+*.iml
+.gradle
+
+# idea
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+### build
+**/build/
+!src/**/build/
+/build
+
+# properties
+local.properties
+keystore.properties
+*/*.keystore
+
+app/debug/*
+app/release/*
+
+# gem
+Gemfile.lock
+
+# packer
+.packer/*
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/

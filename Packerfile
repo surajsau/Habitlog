@@ -1,0 +1,10 @@
+base: &default
+  - keystore.properties
+
+debug:
+  - *default
+  - app/dev.keystore
+
+release:
+  - *default
+  - habit.jks
