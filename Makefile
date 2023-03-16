@@ -38,13 +38,17 @@ snap: ## スクリーンショット撮って開く
 	open ~/Desktop/screenshots/screen-${TIMESTAMP}.png
 
 .PHONY: install-debug
-install-debug: # debug アプリをビルドしてインストールする
+install-debug: ## debug アプリをビルドしてインストールする
 	./gradlew assembleDebug
 	adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-.PHONY: uninstall
-uninstall: ## アプリをアンインストールする
-	adb uninstall $(PACKAGE)
+.PHONY: generate-golden
+generate-golden: ## Golden screenhots の生成
+	./gradlew recordPaparazziDebug
+
+.PHONY: test-screenshot
+test-screenshot: ## Screenshot テストを実行する
+	./gradlew clean verifyPaparazziDebug
 
 .PHONY: help
 .DEFAULT_GOAL := help
