@@ -46,13 +46,13 @@ fun IconChip(
     }
 }
 
-private class IconChipParamProvider: PreviewParameterProvider<Boolean> {
+internal class IconChipParamProvider: PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean> = sequenceOf(true, false)
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewIconChip(@PreviewParameter(IconChipParamProvider::class) param: Boolean) {
+internal fun PreviewIconChip(@PreviewParameter(IconChipParamProvider::class) param: Boolean) {
     IconChip(
         isSelected = param,
         icon = HabitIcons[0],

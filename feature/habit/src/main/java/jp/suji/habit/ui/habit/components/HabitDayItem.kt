@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import jp.suji.habit.fake.FakeHabit
+import jp.suji.habit.ui.core.HabitColor
 
 @Composable
 fun HabitDayItem(
@@ -27,20 +29,15 @@ fun HabitDayItem(
     )
 }
 
-private class HabitDayParameterProvider: PreviewParameterProvider<Boolean> {
+internal class HabitDayParameterProvider: PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean> = sequenceOf(true, false)
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewHabitDayItem(@PreviewParameter(HabitDayParameterProvider::class) parameter: Boolean) {
-//    Box(
-//        modifier = Modifier.padding(16.dp),
-//        contentAlignment = Alignment.Center
-//    ) {
-//        HabitDayItem(
-//            isCompleted = parameter,
-//            color = FakeHabit.color
-//        )
-//    }
+internal fun PreviewHabitDayItem(@PreviewParameter(HabitDayParameterProvider::class) parameter: Boolean) {
+    HabitDayItem(
+        isCompleted = parameter,
+        color = HabitColor[FakeHabit.color.index]
+    )
 }

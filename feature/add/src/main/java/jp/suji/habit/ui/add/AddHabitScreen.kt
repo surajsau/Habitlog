@@ -192,7 +192,7 @@ private fun ColumnScope.ColorSelection(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewAddTaskScreen() {
+internal fun PreviewAddTaskScreen() {
     AddTaskScreenImpl(
         state = AddHabitScreenState.UiState(),
         onTapDismiss = {},

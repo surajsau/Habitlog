@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import jp.suji.habit.fake.FakeHabit
 import jp.suji.habit.model.Habit
 import jp.suji.habit.ui.core.HabitColor
 import jp.suji.habit.ui.core.HabitIcons
@@ -105,17 +106,16 @@ fun HabitItem(
     }
 }
 
-private class HabitItemParamProvider: PreviewParameterProvider<Boolean> {
+internal class HabitItemParamProvider: PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean>
         get() = sequenceOf(true, false)
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewHabitItem(@PreviewParameter(HabitItemParamProvider::class) param: Boolean) {
-//    HabitItem(
-//        modifier = Modifier.padding(16.dp),
-//        habit = FakeHabit.copy(completedToday = param),
-//        onTapComplete = {}
-//    )
+internal fun PreviewHabitItem(@PreviewParameter(HabitItemParamProvider::class) param: Boolean) {
+    HabitItem(
+        habit = FakeHabit.copy(completedToday = param),
+        onTapComplete = {}
+    )
 }

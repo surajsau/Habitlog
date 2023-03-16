@@ -42,6 +42,6 @@ fun LicenseScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewLicenseScreen() {
+internal fun PreviewLicenseScreen() {
     LicenseScreen(modifier = Modifier.fillMaxSize()){}
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +21,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import jp.suji.habit.fake.FakeHabit
 import jp.suji.habit.model.Habit
+import jp.suji.habit.model.HabitColor
 import jp.suji.habit.model.HabitId
 import jp.suji.habit.ui.habit.components.HabitItem
 import jp.suji.habit.ui.core.R
@@ -86,15 +89,17 @@ private fun HabitScreenImpl(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewHabitScreen() {
-    HabitScreenImpl(
-        modifier = Modifier.fillMaxSize(),
-        habits = listOf(
-//            FakeHabit,FakeHabit
-//            FakeHabit.copy(color = HabitColor[1]),
-//            FakeHabit.copy(color = HabitColor[2])
-        ),
-        onTapComplete = {},
-        onTapSettings = {}
-    )
+internal fun PreviewHabitScreen() {
+    Surface {
+        HabitScreenImpl(
+            modifier = Modifier.fillMaxSize(),
+            habits = listOf(
+                FakeHabit,
+                FakeHabit.copy(color = HabitColor(index = 1)),
+                FakeHabit.copy(color = HabitColor(index = 2))
+            ),
+            onTapComplete = {},
+            onTapSettings = {}
+        )
+    }
 }

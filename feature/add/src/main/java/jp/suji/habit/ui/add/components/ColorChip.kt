@@ -41,13 +41,13 @@ fun ColorChip(
     )
 }
 
-private class ColorChipParamProvider: PreviewParameterProvider<Boolean> {
+internal class ColorChipParamProvider: PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean> = sequenceOf(true, false)
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewIconChip(@PreviewParameter(ColorChipParamProvider::class) param: Boolean) {
+internal fun PreviewColorChip(@PreviewParameter(ColorChipParamProvider::class) param: Boolean) {
     ColorChip(
         selected = param,
         color = HabitColor[0],

@@ -24,6 +24,8 @@ dependencies {
     implementation(libs.firebase.crahlytics.gradlePlugin)
     implementation(libs.konfig.gradlePlugin)
     implementation(libs.detekt.gradlePlugin)
+    implementation(libs.paparazzi.gradlePlugin)
+    implementation(libs.ksp.gradlePlugin)
 }
 
 gradlePlugin {
@@ -59,6 +61,14 @@ gradlePlugin {
         register("detekt") {
             id = "habit.primitive.detekt"
             implementationClass = "jp.suji.habit.primitive.DetektPlugin"
+        }
+        register("paparazzi") {
+            id = "habit.primitive.paparazzi"
+            implementationClass = "jp.suji.habit.primitive.PaparazziPlugin"
+        }
+        register("showkase") {
+            id = "habit.primitive.showkase"
+            implementationClass = "jp.suji.habit.primitive.ShowkasePlugin"
         }
         register("androidFeature") {
             id = "habit.convention.android.feature"

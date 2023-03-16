@@ -25,7 +25,7 @@ android {
 
     signingConfigs {
         create("dev") {
-            storeFile = project.file("dev.keystore")
+            storeFile = project.parent!!.file("dev.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
@@ -35,7 +35,7 @@ android {
             val keystoreProperties = Properties()
             keystoreProperties.load(FileInputStream(keystorePropertiesFile))
             create("prod") {
-                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+                storeFile = keystoreProperties["storeFile"]?.let { project.parent!!.file(it) }
                 storePassword = keystoreProperties["storePassword"] as? String
                 keyAlias = keystoreProperties["keyAlias"] as? String
                 keyPassword = keystoreProperties["keyPassword"] as? String
