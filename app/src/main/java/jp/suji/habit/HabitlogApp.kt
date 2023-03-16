@@ -6,7 +6,7 @@ import jp.suji.habit.di.DataScope
 import jp.suji.habit.data.HabitDatabase
 import jp.suji.habit.data.HabitRepository
 
-class HabitlogApp: Application(), jp.suji.habit.di.DataScope {
+class HabitlogApp: Application(), DataScope {
 
     override val habitRepository by lazy {
         val db = Room

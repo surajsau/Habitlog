@@ -8,6 +8,8 @@
     <string name="hint_habit_title">Title</string>
     <string name="hint_habit_description">Description</string>
 
+    <string name="title_license">Licenses</string>
+
     <string name="content_desc_dismiss_add">Dismiss adding habit</string>
     <string name="content_desc_add">Add habit</string>
     <string name="content_desc_open_add_task">Start Adding habit</string>
