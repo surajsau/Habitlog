@@ -3,8 +3,8 @@ base: &default
 
 debug:
   - *default
-  - app/dev.keystore
+  - dev.keystore
 
 release:
   - *default
-  - habit.jks
+  - habit.keystore
