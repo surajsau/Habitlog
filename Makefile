@@ -44,6 +44,8 @@ install-debug: ## debug アプリをビルドしてインストールする
 
 .PHONY: generate-golden
 generate-golden: ## Golden screenhots の生成
+	rm -rf feature/add/src/test/snapshots
+	rm -rf feature/habit/src/test/snapshots
 	./gradlew recordPaparazziDebug
 
 .PHONY: test-screenshot
