@@ -27,11 +27,9 @@ core-utils = "0.0.1"
 coroutine = "1.6.4"
 datastore = "1.0.0"
 detekt = "1.22.0"
-firebase = "31.2.2"
-firebase-auth = "21.0.8"
-firebase-auth-ui = "7.2.0"
-firebase-crashlytics = "2.9.4"
-firebase-kmm = "1.6.2"
+firebase-analytics = "21.2.0"
+firebase-crashlytics-plugin = "2.9.4"
+firebase-crashlytics = "18.3.5"
 glance = "1.0.0-alpha05"
 hilt = "2.44.2"
 hilt-ext = "1.0.0"
@@ -84,7 +82,7 @@ kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 kotlin-serialization-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 android-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "android-desugar" }
-firebase-crahlytics-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics" }
+firebase-crahlytics-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebase-crashlytics-plugin" }
 moko-resources-gradlePlugin = { module = "dev.icerock.moko:resources-generator", version.ref = "moko-resources" }
 play-services-gradlePlugin = { module = "com.google.gms:google-services", version.ref = "play-services" }
 konfig-gradlePlugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "konfig" }
@@ -145,15 +143,8 @@ sqldelight-driver-android = { module = "app.cash.sqldelight:android-driver", ver
 sqldelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 
 # firebase
-firebase-bom = "com.google.firebase:firebase-bom:31.2.2"
-firebase-common = { module = "com.google.firebase:firebase-common-ktx" }
-firebase-auth-ui = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebase-auth-ui" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
-firebase-storage = { module = "com.google.firebase:firebase-storage-ktx" }
-firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
-
-play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "play-services-auth" }
-play-services-mlkit-barcode = { module = "com.google.android.gms:play-services-mlkit-barcode-scanning", version.ref = "play-services-mlkit-barcode" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref = "firebase-crashlytics" }
 
 # camerax
 camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
