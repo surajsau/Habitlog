@@ -68,7 +68,10 @@ dependencies {
     implementation(projects.feature.add)
     implementation(projects.core.ui)
     implementation(projects.core.data)
+    implementation(projects.core.model)
     implementation(projects.core.di)
+
+    implementation(projects.feature.notification)
 
     implementation(libs.room.runtime)
 }

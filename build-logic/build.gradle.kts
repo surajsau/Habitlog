@@ -63,6 +63,10 @@ gradlePlugin {
             id = "habit.primitive.firebase"
             implementationClass = "jp.suji.habit.primitive.FirebasePlugin"
         }
+        register("workmanager") {
+            id = "habit.primitive.workmanager"
+            implementationClass = "jp.suji.habit.primitive.WorkManagerPlugin"
+        }
         register("androidFeature") {
             id = "habit.convention.feature"
             implementationClass = "jp.suji.habit.convention.AndroidFeaturePlugin"
