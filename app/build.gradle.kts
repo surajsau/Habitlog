@@ -3,9 +3,8 @@ import java.util.Properties
 
 plugins {
     kotlin("kapt")
-    id("habit.primitive.android.application")
-    id("habit.primitive.android.kotlin")
-    id("habit.primitive.compose")
+    id("habit.convention.application")
+    id("habit.primitive.firebase")
 }
 
 val keystorePropertiesFile = project.parent?.file("keystore.properties")

@@ -1,8 +1,8 @@
 package jp.suji.habit.primitive
 
 import org.gradle.api.Project
-import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
+import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.DependencyHandlerScope
@@ -45,4 +45,5 @@ fun DependencyHandlerScope.kaptAndroidTest(
     add("kaptAndroidTest", artifact.get())
 }
 
-val Project.libs get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val Project.libs: VersionCatalog
+    get() = extensions.getByType<VersionCatalogsExtension>().named("libs")

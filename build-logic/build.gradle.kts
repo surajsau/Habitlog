@@ -19,10 +19,7 @@ dependencies {
     implementation(libs.kotlin.gradlePlugin)
     implementation(libs.android.gradlePlugin)
     implementation(libs.play.services.gradlePlugin)
-    implementation(libs.moko.resources.gradlePlugin)
-    implementation(libs.sqldelight.gradlePlugin)
     implementation(libs.firebase.crahlytics.gradlePlugin)
-    implementation(libs.konfig.gradlePlugin)
     implementation(libs.detekt.gradlePlugin)
     implementation(libs.paparazzi.gradlePlugin)
     implementation(libs.ksp.gradlePlugin)
@@ -30,10 +27,6 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("androidApplication") {
-            id = "habit.primitive.android.application"
-            implementationClass = "jp.suji.habit.primitive.AndroidApplicationPlugin"
-        }
         register("androidModule") {
             id = "habit.primitive.android.module"
             implementationClass = "jp.suji.habit.primitive.AndroidModulePlugin"
@@ -41,10 +34,6 @@ gradlePlugin {
         register("androidKotlin") {
             id = "habit.primitive.android.kotlin"
             implementationClass = "jp.suji.habit.primitive.AndroidKotlinPlugin"
-        }
-        register("firebase") {
-            id = "habit.primitive.firebase"
-            implementationClass = "jp.suji.habit.primitive.AndroidFirebasePlugin"
         }
         register("compose") {
             id = "habit.primitive.compose"
@@ -70,9 +59,17 @@ gradlePlugin {
             id = "habit.primitive.showkase"
             implementationClass = "jp.suji.habit.primitive.ShowkasePlugin"
         }
+        register("firebase") {
+            id = "habit.primitive.firebase"
+            implementationClass = "jp.suji.habit.primitive.FirebasePlugin"
+        }
         register("androidFeature") {
-            id = "habit.convention.android.feature"
+            id = "habit.convention.feature"
             implementationClass = "jp.suji.habit.convention.AndroidFeaturePlugin"
+        }
+        register("application") {
+            id = "habit.convention.application"
+            implementationClass = "jp.suji.habit.convention.AndroidApplicationPlugin"
         }
     }
 }

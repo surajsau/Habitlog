@@ -22,6 +22,7 @@ class HabitlogApp: Application(), DataScope {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        throw RuntimeException("Crashlytics Test")
     }
 
     companion object {

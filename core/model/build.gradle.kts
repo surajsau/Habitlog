@@ -1,5 +1,5 @@
 plugins {
-    id("habit.convention.android.feature")
+    id("habit.convention.feature")
 }
 
 android.namespace = "jp.suji.habit.model"

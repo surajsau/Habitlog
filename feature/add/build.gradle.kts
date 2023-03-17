@@ -1,5 +1,5 @@
 plugins {
-    id("habit.convention.android.feature")
+    id("habit.convention.feature")
     id("habit.primitive.paparazzi")
     id("habit.primitive.showkase")
 }
