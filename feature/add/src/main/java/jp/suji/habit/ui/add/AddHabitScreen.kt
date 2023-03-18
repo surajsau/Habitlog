@@ -50,7 +50,6 @@ import jp.suji.habit.ui.add.components.IconChip
 import jp.suji.habit.ui.add.components.TimePickerDialog
 import jp.suji.habit.ui.core.HabitIcons
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
     modifier: Modifier = Modifier,
