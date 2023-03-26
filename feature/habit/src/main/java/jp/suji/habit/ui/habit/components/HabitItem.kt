@@ -46,14 +46,14 @@ fun HabitItem(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(8.dp)
+                shape = MaterialTheme.shapes.medium
             )
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.Bottom,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
                 painter = painterResource(id = HabitIcons[habit.icon.index].res),
@@ -67,10 +67,7 @@ fun HabitItem(
 
             Text(
                 text = habit.title,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                ),
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
@@ -79,10 +76,6 @@ fun HabitItem(
             FilledIconButton(
                 modifier = Modifier.size(36.dp),
                 onClick = onTapComplete,
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    contentColor = Color.White,
-                    containerColor = HabitColor[habit.color.index].copy(alpha = if (habit.completedToday) 1f else 0.5f)
-                ),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Icon(
@@ -98,7 +91,7 @@ fun HabitItem(
 
         HabitYear(
             modifier = Modifier.height(72.dp),
-            color = HabitColor[habit.color.index],
+            color = MaterialTheme.colorScheme.primary /* HabitColor[habit.color.index] */,
             days = habit.days
         )
 
