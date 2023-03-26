@@ -10,13 +10,13 @@ class HabitRepository(
     private val logDao: LogDao
 ) {
 
-    suspend fun insert(title: String, icon: Int, color: Int) = withContext(Dispatchers.IO) {
+    suspend fun insert(title: String, icon: Int, color: Int): Int = withContext(Dispatchers.IO) {
         val entity = HabitEntity(
             title = title,
             icon = icon,
             color = color
         )
-        habitDao.insert(entity = entity)
+        return@withContext habitDao.insert(entity = entity).toInt()
     }
 
     fun watch(): Flow<List<HabitWithLog>> = habitDao.watch()

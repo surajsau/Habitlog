@@ -11,6 +11,11 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.ui)
     implementation(projects.core.di)
+    implementation(projects.core.notification)
+    implementation(projects.core.ext)
+
+    implementation(libs.workmanager.runtime)
+    implementation(libs.accompanist.permission)
 
     testImplementation(libs.test.parameter.injector)
 }

@@ -16,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TimePickerState
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,6 +37,7 @@ fun TimePickerDialog(
     onTapDismiss: () -> Unit,
     onTapConfirm: () -> Unit
 ) {
+    TopAppBarDefaults
     Dialog(
         onDismissRequest = onRequestDismiss,
         properties = DialogProperties(

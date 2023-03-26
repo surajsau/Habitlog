@@ -1,16 +1,13 @@
 package jp.suji.habit.ui.add
 
+import android.content.Context
+import android.content.IntentFilter
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,23 +28,27 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import jp.suji.habit.ext.LifecycleEffect
+import jp.suji.habit.ext.isAboveTiramisu
 import jp.suji.habit.ui.core.R
 import jp.suji.habit.ui.add.components.IconChip
 import jp.suji.habit.ui.add.components.TimePickerDialog
+import jp.suji.habit.ui.add.worker.mark.MarkHabitCompleteReceiver
 import jp.suji.habit.ui.core.HabitIcons
 
 @Composable
@@ -57,11 +58,37 @@ fun AddTaskScreen(
     onTapDismiss: () -> Unit,
     onTaskAdded: () -> Unit
 ) {
+    val context = LocalContext.current
+
     DisposableEffect(state.dismiss) {
         if (state.dismiss) {
             onTaskAdded()
         }
         onDispose{}
+    }
+
+    LifecycleEffect {
+        when(it) {
+            Lifecycle.Event.ON_CREATE -> {
+                if (isAboveTiramisu()) {
+                    context.registerReceiver(
+                        MarkHabitCompleteReceiver(),
+                        IntentFilter(MarkHabitCompleteReceiver.ACTION_NAME),
+                        Context.RECEIVER_NOT_EXPORTED
+                    )
+                } else {
+                    context.registerReceiver(
+                        MarkHabitCompleteReceiver(),
+                        IntentFilter(MarkHabitCompleteReceiver.ACTION_NAME),
+                    )
+                }
+            }
+
+            Lifecycle.Event.ON_DESTROY -> {
+                context.unregisterReceiver(MarkHabitCompleteReceiver())
+            }
+            else -> { /* do nothing */ }
+        }
     }
 
     AddTaskScreenImpl(
@@ -136,6 +163,7 @@ private fun AddTaskScreenImpl(
             NotificationSection(
                 notificationEnabled = state.notificationEnabled,
                 notificationTime = state.notificationTime,
+                permissionRationale = state.permissionRationale,
                 onChangeEnableNotification = onChangeEnableNotification,
                 onTapNotificationTime = onTapNotificationTime,
             )
@@ -145,8 +173,9 @@ private fun AddTaskScreenImpl(
     }
 }
 
+context(ColumnScope)
 @Composable
-private fun ColumnScope.TitleAndDescription(
+private fun TitleAndDescription(
     title: String,
     description: String,
     onChangeTitle: (String) -> Unit,
@@ -182,8 +211,9 @@ private fun ColumnScope.TitleAndDescription(
     }
 }
 
+context(ColumnScope)
 @Composable
-private fun ColumnScope.IconSelection(
+private fun IconSelection(
     selectedIconIndex: Int,
     onTapIcon: (Int) -> Unit
 ) {
@@ -215,11 +245,13 @@ private fun ColumnScope.IconSelection(
 
 }
 
+context(ColumnScope)
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun ColumnScope.NotificationSection(
+private fun NotificationSection(
     notificationEnabled: Boolean,
     notificationTime: String,
+    permissionRationale: String?,
     onChangeEnableNotification: (Boolean) -> Unit,
     onTapNotificationTime: () -> Unit
 ) {
@@ -256,6 +288,27 @@ private fun ColumnScope.NotificationSection(
         }
 
         AnimatedContent(
+            targetState = permissionRationale != null,
+            label = ""
+        ) { showRationale ->
+            if (showRationale) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = MaterialTheme.colorScheme.errorContainer,
+                            shape = MaterialTheme.shapes.small
+                        )
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    text = permissionRationale!!,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                )
+            }
+        }
+
+        AnimatedContent(
             targetState = notificationEnabled,
             label = "",
         ) { enabled ->
@@ -284,9 +337,55 @@ private fun ColumnScope.NotificationSection(
                     }
                 }
             }
-        }
+            }
     }
 }
+
+//region Preview: Notification Section
+internal class NotificationSectionPreviewParam: PreviewParameterProvider<NotificationSectionPreviewParam.Model> {
+
+    override val values: Sequence<Model>
+        get() = sequenceOf(
+            Model(
+                notificationTime = "12:00",
+                notificationEnabled = false,
+                permissionRationale = null
+            ),
+            Model(
+                notificationTime = "07:00",
+                notificationEnabled = false,
+                permissionRationale = "Allow notifications"
+            ),
+            Model(
+                notificationTime = "07:00",
+                notificationEnabled = true,
+                permissionRationale = null
+            )
+        )
+
+    data class Model(
+        val notificationTime: String,
+        val notificationEnabled: Boolean,
+        val permissionRationale: String?
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun PreviewNotificationSection(
+    @PreviewParameter(NotificationSectionPreviewParam::class) model: NotificationSectionPreviewParam.Model
+) {
+    Column {
+        NotificationSection(
+            notificationEnabled = model.notificationEnabled,
+            notificationTime = model.notificationTime,
+            permissionRationale = model.permissionRationale,
+            onChangeEnableNotification = {},
+            onTapNotificationTime = {}
+        )
+    }
+}
+//endregion
 
 @Preview(showBackground = true)
 @Composable

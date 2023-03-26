@@ -9,12 +9,8 @@ class AddHabit constructor(
     suspend operator fun invoke(
         title: String,
         icon: Int,
-        color: Int,
-        enableNotification: Boolean,
-        notificationHour: Int,
-        notificationMinute: Int
-    ) {
-        //TODO fire up periodic work request
-        repository.insert(title = title, icon = icon, color = color)
+        color: Int
+    ): Int {
+        return repository.insert(title = title, icon = icon, color = color)
     }
 }

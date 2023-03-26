@@ -8,13 +8,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
-import jp.suji.habit.ui.core.R
 import jp.suji.habit.ui.add.navigation.AddTaskRoute
 import jp.suji.habit.ui.add.navigation.addTask
 import jp.suji.habit.ui.core.AppTheme
+import jp.suji.habit.ui.core.R
 import jp.suji.habit.ui.habit.navigation.HabitRoute
 import jp.suji.habit.ui.habit.navigation.habit
 import jp.suji.habit.ui.settings.navigation.SettingsRoute
@@ -25,6 +26,7 @@ fun App(
     modifier: Modifier = Modifier,
     state: AppState = rememberAppState()
 ) {
+    val context = LocalContext.current
     AppTheme {
         Surface(modifier = modifier) {
             Scaffold(

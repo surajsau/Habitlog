@@ -8,6 +8,7 @@
     <string name="title_notification_description">You\'ll be notified about the task at the time of your convenience</string>
     <string name="title_notification_time">Notification time</string>
     <string name="title_color">Theme Color</string>
+    <string name="rationale_notification_permission">Allow notifications</string>
     <string name="hint_habit_title">Title</string>
     <string name="hint_habit_description">Description</string>
 
@@ -22,4 +23,9 @@
     <string name="content_desc_open_add_task">Start Adding habit</string>
     <string name="content_desc_settings">Open settings</string>
     <string name="content_desc_dismiss_settings">Close settings</string>
+
+    <string name="notification_habit_description">Have you completed it today?</string>
+    <string name="notification_habit_description_big">Just checking in if you\'ve completed it today. No worries! You can always mark it complete later in the day</string>
+    <string name="notification_habit_action_yes">Yes!</string>
+    <string name="notification_habit_action_no">Not Yet</string>
 </resources>
