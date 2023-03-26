@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import jp.suji.habit.di.dataScope
 import jp.suji.habit.di.usecaseScope
 import jp.suji.habit.domain.CheckHabit
 import jp.suji.habit.domain.UncheckHabit

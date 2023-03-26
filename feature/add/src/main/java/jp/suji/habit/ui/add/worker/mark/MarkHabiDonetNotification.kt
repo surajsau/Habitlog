@@ -1,37 +1,43 @@
-package jp.suji.habit.notification
+package jp.suji.habit.ui.add.worker.mark
 
 import android.app.Notification
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.IconCompat
-import jp.suji.habit.model.Habit
-import jp.suji.habit.ui.core.HabitIcons
+import jp.suji.habit.notification.HabitNotification
+import jp.suji.habit.notification.HabitNotificationChannelId
 import jp.suji.habit.ui.core.R
 
-class HabitNotification(
+class MarkHabitDoneNotification(
     private val context: Context,
-    private val habit: Habit
-) {
+    private val model: Model
+): HabitNotification {
+
+    override val id: Int
+        get() = model.habitId
 
     private val actionCompleted: NotificationCompat.Action
         get() = NotificationCompat.Action
             .Builder(
                 IconCompat.createWithResource(context, R.drawable.ic_add),
                 context.getString(R.string.notification_habit_action_yes),
-                MarkHabitCompleteReceiver.createPendingIntent(context, habit.id)
+                MarkHabitCompleteReceiver.createPendingIntent(context, model.habitId)
             )
+            .setAuthenticationRequired(true)
             .build()
 
-    fun create(): Notification {
+    override fun create(): Notification {
         return NotificationCompat.Builder(context, HabitNotificationChannelId)
-            .setSmallIcon(IconCompat.createWithResource(context, HabitIcons[habit.icon.index].res))
-            .setContentTitle(habit.title)
+            .setSmallIcon(IconCompat.createWithResource(context, model.habitIconRes))
+            .setContentTitle(model.title)
             .setContentText(context.getString(R.string.notification_habit_description))
-//            .setStyle(
-//                NotificationCompat.BigTextStyle()
-//                    .bigText(context.getString(R.string.notification_habit_description_big))
-//            )
             .addAction(actionCompleted)
             .build()
     }
+
+    data class Model(
+        val title: String,
+        val habitId: Int,
+        val habitIconRes: Int
+    )
 }

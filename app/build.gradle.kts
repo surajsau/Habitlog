@@ -70,8 +70,8 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.di)
+    implementation(projects.core.notification)
 
-    implementation(projects.feature.notification)
-
+    implementation(libs.workmanager.runtime)
     implementation(libs.room.runtime)
 }

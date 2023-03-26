@@ -21,7 +21,7 @@ interface HabitDao {
     suspend fun getAll(): List<HabitWithLog>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: HabitEntity)
+    suspend fun insert(entity: HabitEntity): Long
 
     @Update
     suspend fun update(entity: HabitEntity)

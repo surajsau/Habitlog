@@ -8,6 +8,7 @@
     <string name="title_notification_description">You\'ll be notified about the task at the time of your convenience</string>
     <string name="title_notification_time">Notification time</string>
     <string name="title_color">Theme Color</string>
+    <string name="rationale_notification_permission">Allow notifications</string>
     <string name="hint_habit_title">Title</string>
     <string name="hint_habit_description">Description</string>
 
