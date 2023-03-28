@@ -4,3 +4,7 @@ plugins {
 }
 
 android.namespace = "jp.suji.habit.ui.core"
+
+dependencies {
+    implementation(libs.androidx.splashscreen)
+}

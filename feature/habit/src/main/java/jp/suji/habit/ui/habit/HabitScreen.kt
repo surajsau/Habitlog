@@ -1,7 +1,10 @@
 package jp.suji.habit.ui.habit
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,16 +13,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import jp.suji.habit.fake.FakeHabit
 import jp.suji.habit.model.Habit
@@ -36,7 +43,7 @@ fun HabitScreen(
 ) {
     HabitScreenImpl(
         modifier = modifier,
-        habits = state.habits,
+        state = state.uiState,
         onTapComplete = state::onTapComplete,
         onTapSettings = onTapSettings
     )
@@ -46,14 +53,20 @@ fun HabitScreen(
 @Composable
 private fun HabitScreenImpl(
     modifier: Modifier = Modifier,
-    habits: List<Habit>,
+    state: HabitScreenState.UiState,
     onTapComplete: (HabitId) -> Unit,
     onTapSettings: () -> Unit
 ) {
     Column(modifier = modifier) {
         CenterAlignedTopAppBar(
             title = {
-                Text(text = stringResource(id = R.string.app_name))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(painter = painterResource(id = R.drawable.ic_logo), contentDescription = "")
+                    Text(text = stringResource(id = R.string.app_name))
+                }
             },
             actions = {
                 IconButton(onClick = onTapSettings) {
@@ -65,39 +78,85 @@ private fun HabitScreenImpl(
             }
         )
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-            items(habits) { habit ->
-                HabitItem(
+        when (state) {
+            is HabitScreenState.UiState.Loading -> {
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    habit = habit,
-                    onTapComplete = { onTapComplete(habit.id) }
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+                }
+            }
+
+            is HabitScreenState.UiState.Data -> {
+                HabitsList(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    habits = state.habits,
+                    onTapComplete = onTapComplete
                 )
             }
         }
     }
 }
 
+context(ColumnScope)
+@Composable
+internal fun HabitsList(
+    modifier: Modifier = Modifier,
+    habits: List<Habit>,
+    onTapComplete: (HabitId) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        items(habits) { habit ->
+            HabitItem(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                habit = habit,
+                onTapComplete = { onTapComplete(habit.id) }
+            )
+        }
+    }
+}
+
+internal class PreviewHabitScreenParameterProvider: PreviewParameterProvider<HabitScreenState.UiState> {
+
+    override val values: Sequence<HabitScreenState.UiState>
+        get() = sequenceOf(
+            HabitScreenState.UiState.Loading,
+            HabitScreenState.UiState.Data(
+                listOf(
+                    FakeHabit,
+                    FakeHabit.copy(color = HabitColor(index = 1)),
+                    FakeHabit.copy(color = HabitColor(index = 2))
+                )
+            )
+        )
+}
+
 @Preview(showBackground = true)
 @Composable
-internal fun PreviewHabitScreen() {
+internal fun PreviewHabitScreen(
+    @PreviewParameter(PreviewHabitScreenParameterProvider::class) state: HabitScreenState.UiState
+) {
     Surface {
         HabitScreenImpl(
             modifier = Modifier.fillMaxSize(),
-            habits = listOf(
-                FakeHabit,
-                FakeHabit.copy(color = HabitColor(index = 1)),
-                FakeHabit.copy(color = HabitColor(index = 2))
-            ),
+            state = state,
             onTapComplete = {},
             onTapSettings = {}
         )

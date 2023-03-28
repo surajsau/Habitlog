@@ -2,9 +2,12 @@ package jp.suji.habit.ui.habit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import jp.suji.habit.di.usecaseScope
 import jp.suji.habit.domain.CheckHabit
@@ -38,7 +41,10 @@ class HabitScreenState(
     private val checkHabit: CheckHabit,
     private val uncheckHabit: UncheckHabit
 ) {
-    val habits = mutableStateListOf<Habit>()
+    var uiState by mutableStateOf<UiState>(UiState.Loading)
+        private set
+
+    private val habits = mutableListOf<Habit>()
 
     init {
         coroutineScope.launch {
@@ -47,6 +53,8 @@ class HabitScreenState(
                 .collect {
                     habits.clear()
                     habits.addAll(it)
+
+                    uiState = UiState.Data(habits = habits)
                 }
         }
     }
@@ -71,6 +79,6 @@ class HabitScreenState(
 
         data class Data(
             val habits: List<Habit>
-        )
+        ):  UiState
     }
 }
