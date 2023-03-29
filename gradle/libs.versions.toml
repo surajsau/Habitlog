@@ -46,6 +46,7 @@ kotlin-immutable-collections = "0.3.5"
 kotlin-serialization = "1.4.1"
 ksp = "1.8.0-1.0.8"
 lifecycle = "2.6.0"
+license-tools = "10.6.1"
 material-compose = "1.1.7"
 material3 = "1.8.0"
 material3-compose = "1.1.0-alpha08"
@@ -93,6 +94,7 @@ anvil-gradlePlugin = { module = "com.squareup.anvil:gradle-plugin", version.ref 
 hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 paparazzi-gradlePlugin = { module = "app.cash.paparazzi:paparazzi-gradle-plugin", version.ref = "paparazzi" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+license-tools-gradlePlugin = { module = "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin", version.ref = "license-tools" }
 
 # android
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core"}
@@ -208,6 +210,10 @@ room-test = { module = "androidx.room:room-testing",version.ref = "room" }
 
 # coil
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+# license
+license-tools-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "license-tools" }
+license-tools-ui = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "license-tools" }
 
 [bundles]
 compose = [ "compose-ui", "compose-activity", "compose-tooling", "compose-foundation", "compose-navigation", "androidx-viewmodel-compose", "androidx-runtime-compose" ]

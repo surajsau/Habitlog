@@ -11,6 +11,7 @@ import jp.suji.habit.ui.add.navigation.addTask
 import jp.suji.habit.ui.core.AppTheme
 import jp.suji.habit.ui.habit.navigation.HabitRoute
 import jp.suji.habit.ui.habit.navigation.habit
+import jp.suji.habit.ui.settings.navigation.LicenseRoute
 import jp.suji.habit.ui.settings.navigation.SettingsRoute
 import jp.suji.habit.ui.settings.navigation.settings
 
@@ -39,7 +40,7 @@ fun App(
                 settings(
                     onTapDismiss = state::pop,
                     onTapNotificationSettings = {},
-                    onTapLicense = {}
+                    onTapLicense = { state.navigate(route = LicenseRoute) }
                 )
 
                 notificationSettings(onTapBack = state::pop)

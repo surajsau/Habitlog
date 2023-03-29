@@ -1,6 +1,7 @@
 plugins {
     id("habit.convention.feature")
     id("habit.primitive.showkase")
+    id("habit.primitive.license")
 }
 
 android {

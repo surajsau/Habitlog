@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.detekt.gradlePlugin)
     implementation(libs.paparazzi.gradlePlugin)
     implementation(libs.ksp.gradlePlugin)
+    implementation(libs.license.tools.gradlePlugin)
 }
 
 gradlePlugin {
@@ -66,6 +67,10 @@ gradlePlugin {
         register("workmanager") {
             id = "habit.primitive.workmanager"
             implementationClass = "jp.suji.habit.primitive.WorkManagerPlugin"
+        }
+        register("license") {
+            id = "habit.primitive.license"
+            implementationClass = "jp.suji.habit.primitive.LicensePlugin"
         }
         register("androidFeature") {
             id = "habit.convention.feature"
