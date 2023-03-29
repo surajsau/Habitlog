@@ -42,6 +42,14 @@ install-debug: # debug アプリをビルドしてインストールする
 	./gradlew assembleDebug
 	adb install -r app/build/outputs/apk/debug/app-debug.apk
 
+.PHONY: create-release
+create-release: ## リリース用の aab を作成する
+	cp habit.keystore app/
+	./gradlew bundleRelease
+	rm app/habit.keystore
+	mkdir -p outputs
+	mv app/build/outputs/bundle/release/app-release.aab outputs/
+
 .PHONY: uninstall
 uninstall: ## アプリをアンインストールする
 	adb uninstall $(PACKAGE)
