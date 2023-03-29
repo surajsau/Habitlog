@@ -52,6 +52,18 @@ generate-golden: ## Golden screenhots の生成
 test-screenshot: ## Screenshot テストを実行する
 	./gradlew clean verifyPaparazziDebug
 
+.PHONY: create-release
+create-release: ## リリース用の aab を作成する
+	cp habit.keystore app/
+	./gradlew bundleRelease
+	rm app/habit.keystore
+	mkdir -p outputs
+	mv app/build/outputs/bundle/release/app-release.aab outputs/
+
+.PHONY: uninstall
+uninstall: ## アプリをアンインストールする
+	adb uninstall $(PACKAGE)
+
 .PHONY: help
 .DEFAULT_GOAL := help
 help: ## Display this help screen.
