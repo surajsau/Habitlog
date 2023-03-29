@@ -5,7 +5,7 @@ import jp.suji.habit.domain.AddHabit
 import jp.suji.habit.domain.CheckHabit
 import jp.suji.habit.domain.DeleteHabit
 import jp.suji.habit.domain.UncheckHabit
-import jp.suji.habit.domain.WatchHabitlog
+import jp.suji.habit.domain.GetHabits
 
 context(AppScope)
 class UsecaseScope {
@@ -13,7 +13,7 @@ class UsecaseScope {
     fun checkHabit(): CheckHabit = CheckHabit(repository = habitRepository)
     fun deleteHabit(): DeleteHabit = DeleteHabit(repository = habitRepository)
     fun uncheckHabit(): UncheckHabit = UncheckHabit(repository = habitRepository)
-    fun watchHabitlog(): WatchHabitlog = WatchHabitlog(repository = habitRepository)
+    fun watchHabitlog(): GetHabits = GetHabits(repository = habitRepository)
 }
 
 val Context.usecaseScope: UsecaseScope

@@ -22,7 +22,7 @@ class HabitRepositoryTest {
     fun testInsertTask() = runTest {
         dataRepository.insert(title = "title", icon = 1, color = 1)
 
-        dataRepository.watch().test {
+        dataRepository.getHabits().test {
             val list = awaitItem()
 
             assertEquals(list.size, 1)
@@ -38,7 +38,7 @@ class HabitRepositoryTest {
         dataRepository.insert(title = "title", icon = 1, color = 1)
         dataRepository.updateTitle(id = 1, title = "changed title")
 
-        dataRepository.watch().test {
+        dataRepository.getHabits().test {
             awaitItem()
             val latest = awaitItem()
 

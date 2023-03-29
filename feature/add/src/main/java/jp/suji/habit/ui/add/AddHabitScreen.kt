@@ -85,7 +85,9 @@ fun AddTaskScreen(
             }
 
             Lifecycle.Event.ON_DESTROY -> {
-                context.unregisterReceiver(MarkHabitCompleteReceiver())
+                runCatching {
+                    context.unregisterReceiver(MarkHabitCompleteReceiver())
+                }
             }
             else -> { /* do nothing */ }
         }

@@ -12,13 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,24 +29,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import jp.suji.habit.fake.FakeHabit
+import jp.suji.habit.fake.CompletedHabit
+import jp.suji.habit.fake.LessCompletedHabit
+import jp.suji.habit.fake.NotCompletedHabit
 import jp.suji.habit.model.Habit
-import jp.suji.habit.model.HabitColor
 import jp.suji.habit.model.HabitId
-import jp.suji.habit.ui.habit.components.HabitItem
 import jp.suji.habit.ui.core.R
+import jp.suji.habit.ui.habit.components.HabitItem
 
 @Composable
 fun HabitScreen(
     modifier: Modifier = Modifier,
     state: HabitScreenState = rememberHabitScreenState(),
-    onTapSettings: () -> Unit
+    onTapSettings: () -> Unit,
+    onTapAddTask: () -> Unit
 ) {
     HabitScreenImpl(
         modifier = modifier,
         state = state.uiState,
         onTapComplete = state::onTapComplete,
-        onTapSettings = onTapSettings
+        onTapSettings = onTapSettings,
+        onTapAddTask = onTapAddTask
     )
 }
 
@@ -55,54 +59,68 @@ private fun HabitScreenImpl(
     modifier: Modifier = Modifier,
     state: HabitScreenState.UiState,
     onTapComplete: (HabitId) -> Unit,
-    onTapSettings: () -> Unit
+    onTapSettings: () -> Unit,
+    onTapAddTask: () -> Unit,
 ) {
-    Column(modifier = modifier) {
-        CenterAlignedTopAppBar(
-            title = {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Icon(painter = painterResource(id = R.drawable.ic_logo), contentDescription = "")
-                    Text(text = stringResource(id = R.string.app_name))
+    Box(modifier = modifier) {
+        Column {
+            TopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_logo),
+                            contentDescription = ""
+                        )
+                        Text(text = stringResource(id = R.string.app_name))
+                    }
+                },
+                actions = {
+                    IconButton(onClick = onTapSettings) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_settings),
+                            contentDescription = stringResource(id = R.string.content_desc_settings)
+                        )
+                    }
                 }
-            },
-            actions = {
-                IconButton(onClick = onTapSettings) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_settings),
-                        contentDescription = stringResource(id = R.string.content_desc_settings)
-                    )
-                }
-            }
-        )
-
-        when (state) {
-            is HabitScreenState.UiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
+            )
+    
+            when (state) {
+                is HabitScreenState.UiState.Loading -> {
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .weight(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+    
+                is HabitScreenState.UiState.Data -> {
+                    HabitsList(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                        habits = state.habits,
+                        onTapComplete = onTapComplete
                     )
                 }
             }
+        }
 
-            is HabitScreenState.UiState.Data -> {
-                HabitsList(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    habits = state.habits,
-                    onTapComplete = onTapComplete
-                )
-            }
+        FloatingActionButton(
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.BottomEnd),
+            onClick = onTapAddTask
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_add),
+                contentDescription = stringResource(id = R.string.content_desc_open_add_task)
+            )
         }
     }
 }
@@ -121,7 +139,7 @@ internal fun HabitsList(
         item {
             Spacer(modifier = Modifier.height(16.dp))
         }
-        items(habits) { habit ->
+        items(habits, key = { it.id.value }) { habit ->
             HabitItem(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -140,9 +158,9 @@ internal class PreviewHabitScreenParameterProvider: PreviewParameterProvider<Hab
             HabitScreenState.UiState.Loading,
             HabitScreenState.UiState.Data(
                 listOf(
-                    FakeHabit,
-                    FakeHabit.copy(color = HabitColor(index = 1)),
-                    FakeHabit.copy(color = HabitColor(index = 2))
+                    NotCompletedHabit,
+                    CompletedHabit,
+                    LessCompletedHabit
                 )
             )
         )
@@ -158,7 +176,8 @@ internal fun PreviewHabitScreen(
             modifier = Modifier.fillMaxSize(),
             state = state,
             onTapComplete = {},
-            onTapSettings = {}
+            onTapSettings = {},
+            onTapAddTask = {}
         )
     }
 }

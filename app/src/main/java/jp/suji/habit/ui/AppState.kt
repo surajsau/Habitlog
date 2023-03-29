@@ -1,18 +1,19 @@
 package jp.suji.habit.ui
 
-import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import jp.suji.habit.ui.habit.navigation.HabitRoute
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun rememberAppState(): AppState {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
     return remember {
         AppState(navController = navController)
     }

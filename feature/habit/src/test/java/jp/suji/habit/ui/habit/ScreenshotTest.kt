@@ -7,7 +7,9 @@ import app.cash.paparazzi.detectEnvironment
 import com.android.ide.common.rendering.api.SessionParams
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import jp.suji.habit.ui.habit.components.PreviewHabitDayItem
+import jp.suji.habit.fake.CompletedHabit
+import jp.suji.habit.fake.LessCompletedHabit
+import jp.suji.habit.fake.NotCompletedHabit
 import jp.suji.habit.ui.habit.components.PreviewHabitItem
 import jp.suji.habit.ui.habit.components.PreviewHabitYear
 import org.junit.Rule
@@ -30,14 +32,15 @@ class ScreenshotTest {
     @Test
     fun habitScreen() {
         paparazzi.snapshot {
-            PreviewHabitScreen()
-        }
-    }
-
-    @Test
-    fun habitDayItem(@TestParameter param: Boolean) {
-        paparazzi.snapshot {
-            PreviewHabitDayItem(param)
+            PreviewHabitScreen(
+                state = HabitScreenState.UiState.Data(
+                    habits = listOf(
+                        NotCompletedHabit,
+                        CompletedHabit,
+                        LessCompletedHabit
+                    )
+                )
+            )
         }
     }
 

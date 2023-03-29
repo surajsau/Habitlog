@@ -66,11 +66,14 @@ dependencies {
     implementation(projects.feature.habit)
     implementation(projects.feature.settings)
     implementation(projects.feature.add)
+    implementation(projects.feature.notification)
     implementation(projects.core.ui)
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.di)
     implementation(projects.core.notification)
+
+    implementation(libs.accompanist.navigation.animation)
 
     implementation(libs.workmanager.runtime)
     implementation(libs.room.runtime)

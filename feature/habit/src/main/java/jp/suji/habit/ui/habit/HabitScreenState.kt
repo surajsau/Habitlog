@@ -8,15 +8,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import jp.suji.habit.di.usecaseScope
 import jp.suji.habit.domain.CheckHabit
 import jp.suji.habit.domain.UncheckHabit
-import jp.suji.habit.domain.WatchHabitlog
+import jp.suji.habit.domain.GetHabits
 import jp.suji.habit.model.Habit
 import jp.suji.habit.model.HabitId
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 @Composable
@@ -29,7 +32,7 @@ fun rememberHabitScreenState(): HabitScreenState {
             coroutineScope = coroutineScope,
             checkHabit = context.usecaseScope.checkHabit(),
             uncheckHabit = context.usecaseScope.uncheckHabit(),
-            watchHabitLog = context.usecaseScope.watchHabitlog()
+            getHabits = context.usecaseScope.watchHabitlog()
         )
     }
 }
@@ -37,25 +40,34 @@ fun rememberHabitScreenState(): HabitScreenState {
 @Stable
 class HabitScreenState(
     private val coroutineScope: CoroutineScope,
-    private val watchHabitLog: WatchHabitlog,
+    private val getHabits: GetHabits,
     private val checkHabit: CheckHabit,
     private val uncheckHabit: UncheckHabit
 ) {
+    private var loading by mutableStateOf(false)
+    private val habits = mutableStateListOf<Habit>()
+
     var uiState by mutableStateOf<UiState>(UiState.Loading)
         private set
 
-    private val habits = mutableListOf<Habit>()
-
     init {
         coroutineScope.launch {
-            watchHabitLog()
-                .filterNot { it.isEmpty() }
-                .collect {
-                    habits.clear()
-                    habits.addAll(it)
+            habits.addAll(getHabits())
+        }
 
-                    uiState = UiState.Data(habits = habits)
+        coroutineScope.launch {
+            combine(
+                snapshotFlow { loading },
+                snapshotFlow { habits }
+            ) { values ->
+                val loading = values[0] as Boolean
+                if (loading) {
+                    return@combine UiState.Loading
                 }
+
+                val habits = values[1] as List<Habit>
+                return@combine UiState.Data(habits = habits)
+            }.collect { uiState = it }
         }
     }
 
@@ -71,14 +83,13 @@ class HabitScreenState(
             } else {
                 checkHabit(id = habit.id)
             }
+
+            habits[index] = habit.copy(completedToday = !habit.completedToday)
         }
     }
 
     sealed interface UiState {
         object Loading: UiState
-
-        data class Data(
-            val habits: List<Habit>
-        ):  UiState
+        data class Data(val habits: List<Habit>):  UiState
     }
 }

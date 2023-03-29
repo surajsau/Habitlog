@@ -1,61 +1,48 @@
 package jp.suji.habit.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import jp.suji.habit.notification.mark.navigation.notificationSettings
 import jp.suji.habit.ui.add.navigation.AddTaskRoute
 import jp.suji.habit.ui.add.navigation.addTask
 import jp.suji.habit.ui.core.AppTheme
-import jp.suji.habit.ui.core.R
 import jp.suji.habit.ui.habit.navigation.HabitRoute
 import jp.suji.habit.ui.habit.navigation.habit
 import jp.suji.habit.ui.settings.navigation.SettingsRoute
 import jp.suji.habit.ui.settings.navigation.settings
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun App(
     modifier: Modifier = Modifier,
     state: AppState = rememberAppState()
 ) {
-    val context = LocalContext.current
     AppTheme {
         Surface(modifier = modifier) {
-            Scaffold(
-                modifier = Modifier.fillMaxSize(),
-                floatingActionButton = {
-                    FloatingActionButton(onClick = { state.navigate(route = AddTaskRoute) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_add),
-                            contentDescription = stringResource(id = R.string.content_desc_open_add_task)
-                        )
-                    }
-                }
+            AnimatedNavHost(
+                navController = state.navController,
+                startDestination = HabitRoute
             ) {
-                NavHost(
-                    modifier = Modifier.padding(it),
-                    navController = state.navController,
-                    startDestination = HabitRoute
-                ) {
-                    addTask(
-                        onTapDismiss = state::pop,
-                        onTaskAdded = state::pop
-                    )
+                addTask(
+                    onTapDismiss = state::pop,
+                    onTaskAdded = state::pop
+                )
 
-                    habit(
-                        onTapSettings = { state.navigate(route = SettingsRoute) }
-                    )
+                habit(
+                    onTapSettings = { state.navigate(route = SettingsRoute) },
+                    onTapAddTask = { state.navigate(route = AddTaskRoute) }
+                )
 
-                    settings(onTapDismiss = state::pop)
-                }
+                settings(
+                    onTapDismiss = state::pop,
+                    onTapNotificationSettings = {},
+                    onTapLicense = {}
+                )
+
+                notificationSettings(onTapBack = state::pop)
             }
         }
     }

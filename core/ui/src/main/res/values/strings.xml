@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">habit log</string>
 
-    <string name="title_settings">Settings</string>
     <string name="title_add_habit">Add Habit</string>
     <string name="title_icon">Icon</string>
     <string name="title_notification">Notify me</string>
@@ -28,4 +27,13 @@
     <string name="notification_habit_description_big">Just checking in if you\'ve completed it today. No worries! You can always mark it complete later in the day</string>
     <string name="notification_habit_action_yes">Yes!</string>
     <string name="notification_habit_action_no">Not Yet</string>
+
+    <string name="title_settings">Settings</string>
+    <string name="settings_title_change_theme">Change Theme</string>
+    <string name="settings_title_license">License</string>
+    <string name="content_desc_license_trailing_icon">Open License</string>
+    <string name="settings_title_notification_settings">Notification Settings</string>
+    <string name="content_desc_notification_settings_trailing_icon">Open Notification Settings</string>
+
+    <string name="title_notification_settings">Notification Settings</string>
 </resources>

@@ -19,7 +19,9 @@ class HabitRepository(
         return@withContext habitDao.insert(entity = entity).toInt()
     }
 
-    fun watch(): Flow<List<HabitWithLog>> = habitDao.watch()
+    suspend fun getHabits(): List<HabitWithLog> = withContext(Dispatchers.IO) {
+        return@withContext habitDao.getAll()
+    }
 
     suspend fun updateColor(id: Int, color: Int): HabitEntity = withContext(Dispatchers.IO) {
         val entity = getForId(id = id)
