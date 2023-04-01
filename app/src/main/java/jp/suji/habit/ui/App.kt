@@ -5,7 +5,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import jp.suji.habit.notification.mark.navigation.notificationSettings
+import jp.suji.habit.feature.notification.navigation.notificationSettings
 import jp.suji.habit.ui.add.navigation.AddTaskRoute
 import jp.suji.habit.ui.add.navigation.addTask
 import jp.suji.habit.ui.core.AppTheme

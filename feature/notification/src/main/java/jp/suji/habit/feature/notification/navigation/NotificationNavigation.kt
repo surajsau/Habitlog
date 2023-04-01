@@ -1,9 +1,9 @@
-package jp.suji.habit.notification.mark.navigation
+package jp.suji.habit.feature.notification.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import jp.suji.habit.notification.mark.NotificationSettingsScreen
+import jp.suji.habit.feature.notification.NotificationSettingsScreen
 
 val NotificationSettingsRoute = "notification_settings"
 

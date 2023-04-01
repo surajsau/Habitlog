@@ -1,4 +1,4 @@
-package jp.suji.habit.notification.mark
+package jp.suji.habit.feature.notification
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text

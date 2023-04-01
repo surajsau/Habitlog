@@ -14,14 +14,6 @@ android {
     namespace = "jp.suji.habit"
     compileSdk = 33
 
-    defaultConfig {
-        applicationId = "jp.suji.habit"
-        minSdk = 26
-        targetSdk = 33
-        versionCode = 1
-        versionName = "0.0.1"
-    }
-
     signingConfigs {
         create("dev") {
             storeFile = project.parent!!.file("dev.keystore")

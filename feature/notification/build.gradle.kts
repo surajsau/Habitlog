@@ -3,7 +3,7 @@ plugins {
     id("habit.primitive.workmanager")
 }
 
-android.namespace = "jp.suji.habit.notification"
+android.namespace = "jp.suji.habit.feature.notification"
 
 dependencies {
     implementation(projects.core.model)

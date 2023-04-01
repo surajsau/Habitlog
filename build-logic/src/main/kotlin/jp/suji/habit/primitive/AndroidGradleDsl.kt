@@ -21,17 +21,21 @@ internal fun Project.android(action: TestedExtension.() -> Unit) {
     extensions.configure(action)
 }
 
-internal fun Project.setupAndroid() {
+internal fun Project.setupAndroid(isApplication: Boolean = false) {
     android {
         namespace?.let { this.namespace = it }
         compileSdkVersion(33)
 
         defaultConfig {
+            if (isApplication) {
+                applicationId = "jp.suji.habit"
+            }
+
             minSdk = 26
             targetSdk = 33
 
-            versionCode = 1
-            versionName = "0.0.1"
+            versionCode = 2
+            versionName = "0.0.2"
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }

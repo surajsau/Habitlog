@@ -17,7 +17,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
             }
 
             application {
-                setupAndroid()
+                setupAndroid(isApplication = true)
             }
         }
     }
